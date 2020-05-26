@@ -1,0 +1,73 @@
+<mat-sidenav-container class="app-content">
+  <mat-sidenav
+    #appSideNav
+    [mode]="viewportMobileQuery.matches ? 'over' : 'side'"
+    [opened]="!viewportMobileQuery.matches"
+    [fixedInViewport]="viewportMobileQuery.matches">
+    <mat-toolbar color="primary">
+      <mat-toolbar-row>
+        <h1></h1>
+        <span class="fill-space"></span>
+        <button mat-icon-button *ngIf="viewportMobileQuery.matches" (click)="appSideNav.close()">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+      </mat-toolbar-row>
+    </mat-toolbar>
+
+    <mat-nav-list>
+      <!-- set the `routerLink` on the `mat-list-item` that way it will route if any of the list item is clicked -->
+      <mat-list-item routerLink="/">
+        <mat-icon matListIcon>home</mat-icon>
+        <a matLine>Home</a>                    
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item routerLink="/users" *ngIf="isLogged$ | async">
+        <mat-icon matListIcon>perm_identity</mat-icon>
+        <a matLine>Users</a>
+      </mat-list-item>
+      <mat-list-item routerLink="/accounts" *ngIf="isLogged$ | async">
+        <mat-icon matListIcon>account_balance</mat-icon>
+        <a matLine>Accounts</a>
+      </mat-list-item>
+      <mat-list-item routerLink="/categories" *ngIf="isLogged$ | async">
+        <mat-icon matListIcon>category</mat-icon>
+       <a matLine>Categories</a>
+      </mat-list-item>
+      <mat-list-item routerLink="/products" *ngIf="isLogged$ | async">
+        <mat-icon matListIcon>devices_other</mat-icon>
+       <a matLine>Products</a>
+      </mat-list-item>
+      <mat-list-item (click)="logout()" *ngIf="isLogged$ | async">
+         <mat-icon matListIcon>logout</mat-icon>
+         <a matLine>Logout</a>
+      </mat-list-item>
+      <mat-list-item (click)="login()" *ngIf="isLoggedOut">
+        <mat-icon matListIcon>logout</mat-icon>
+        <a matLine>Login</a> 
+     </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content class="main-content">
+    <mat-toolbar color="primary" class="main-toolbar">
+      <mat-toolbar-row>
+        <button mat-icon-button (click)="appSideNav.toggle()" *ngIf="viewportMobileQuery.matches">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <h1 routerLink="/" class="app-brand">
+         Limonnana 
+        </h1>
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <main class="main-content-inner">
+      <section class="content-area">
+        <router-outlet></router-outlet>
+      </section>
+    </main>
+    <mat-toolbar>
+      <mat-toolbar-row>
+        <span class="fill-space"></span>
+        Limonnana @ 2020 | esto es el footer
+      </mat-toolbar-row>
+    </mat-toolbar>
+  </mat-sidenav-content>
+</mat-sidenav-container>
