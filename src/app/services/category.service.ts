@@ -18,9 +18,9 @@ export class CategoryService {
     return this.http.get<Category[]>(`${environment.secureCategoryApi}/findAll`);
   }
 
-  public save(product: Category) {
-    console.log(JSON.stringify(product));
-    return this.http.post<Category>(`${environment.secureCategoryApi}/create`, product);
+  public save(category: Category) {
+    console.log('category to be saved: ' + JSON.stringify(category));
+    return this.http.post<Category>(`${environment.secureCategoryApi}/create`, category);
   }
 
   public getCategoryById(id: number){

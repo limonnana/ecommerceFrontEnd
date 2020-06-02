@@ -1,9 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { MatTableDataSource } from '@angular/material';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Category } from 'src/app/models/category';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ValidationService } from 'src/app/services/validation.service';
 import { CategoryService } from 'src/app/services/category.service';
+import { isNullOrUndefined } from 'util';
+import { CategoryDTO } from 'src/app/models/categoryDTO';
+
+
 
 @Component({
   selector: 'app-create-category',
@@ -12,10 +17,13 @@ import { CategoryService } from 'src/app/services/category.service';
 })
 export class CreateCategoryComponent implements OnInit {
 
+  private dataSource: Category[];
+
   newCategoryFormGroup: FormGroup = null;
   error: string = '';
   category: Category = new Category();
   title: string;
+ 
 
   constructor(
     private route: ActivatedRoute,
@@ -25,7 +33,13 @@ export class CreateCategoryComponent implements OnInit {
     private validationService: ValidationService
   ) { }
 
+
   ngOnInit() {
+
+    this.categoryService.getCategories().subscribe(data => {
+      this.dataSource = data;
+    });
+
     this.newCategoryFormGroup = this.buildForm();
     let categoryId = this.route.snapshot.params['categoryId'];
     console.log('categoryId: ' + categoryId);
@@ -36,6 +50,10 @@ export class CreateCategoryComponent implements OnInit {
         .subscribe( data => {
           this.category.categoryId = categoryId;
           this.category.name = data.name;
+          if(!data.categoryParent){
+            this.category.categoryParent = 0;
+          }
+        
           this.newCategoryFormGroup.setValue(this.category);
         });
     }else{
@@ -48,12 +66,14 @@ export class CreateCategoryComponent implements OnInit {
   buildForm(): FormGroup {
     return this.fb.group({
       categoryId:[null],
-      name: [null, Validators.required]
+      name: [null, Validators.required],
+      categoryParent: [null]
     });
   }
 
   addCategory() {
-    const categoryFromForm: Category = this.newCategoryFormGroup.value;
+    const categoryFromForm: CategoryDTO = this.newCategoryFormGroup.value;
+    console.log('categoryParent: ' + JSON.stringify(categoryFromForm));
     this.error = this.validationService.validateNewCategoryForm(categoryFromForm);
     if (this.error != null && this.error.length>2) {
       console.log('error from form: ' + this.error);

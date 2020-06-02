@@ -1,8 +1,8 @@
-export class Category {
+export class CategoryDTO {
 
     categoryId: number;
     name: string;
-    categoryList: Category[];
+    categoryList: CategoryDTO[];
     categoryParent: number;
     
 }
