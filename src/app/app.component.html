@@ -37,6 +37,14 @@
         <mat-icon matListIcon>devices_other</mat-icon>
        <a matLine>Products</a>
       </mat-list-item>
+      <mat-list-item routerLink="/orders" *ngIf="isLogged$ | async">
+        <mat-icon matListIcon>shopping_cart</mat-icon>
+       <a matLine>Orders</a>
+      </mat-list-item>
+      <mat-list-item routerLink="/createOrder" *ngIf="isLogged$ | async">
+        <mat-icon matListIcon>add_shopping_cart</mat-icon>
+       <a matLine>Add Order</a>
+      </mat-list-item>
       <mat-list-item (click)="logout()" *ngIf="isLogged$ | async">
          <mat-icon matListIcon>logout</mat-icon>
          <a matLine>Logout</a>

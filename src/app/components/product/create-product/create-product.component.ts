@@ -4,6 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ProductService } from 'src/app/services/product.service';
 import { Product } from 'src/app/models/product';
 import { ValidationService } from 'src/app/services/validation.service';
+import { CategoryService } from 'src/app/services/category.service';
+import { Category } from 'src/app/models/category';
 
 @Component({
   selector: 'app-create-product',
@@ -12,6 +14,7 @@ import { ValidationService } from 'src/app/services/validation.service';
 })
 export class CreateProductComponent implements OnInit {
 
+  private dataSource: Category[];
   newProductFormGroup: FormGroup = null;
   error: string = '';
   product: Product = new Product();
@@ -22,10 +25,14 @@ export class CreateProductComponent implements OnInit {
     private fb: FormBuilder,
     private productService: ProductService,
     private router: Router,
-    private validationService: ValidationService
+    private validationService: ValidationService,
+    private categoryService: CategoryService,
   ) { }
 
   ngOnInit() {
+    this.categoryService.getCategories().subscribe(data => {
+      this.dataSource = data;
+    });
     this.newProductFormGroup = this.buildForm();
     let productId = this.route.snapshot.params['productId'];
     console.log('productId: ' + productId);
@@ -34,6 +41,9 @@ export class CreateProductComponent implements OnInit {
      
       this.productService.getProductById(productId)
         .subscribe( data => {
+          if(!data.categoryParent){
+            this.product.categoryParent = 0;
+          }
           this.product.productId = productId;
           this.product.name = data.name;
           this.product.price = data.price;
@@ -52,6 +62,7 @@ export class CreateProductComponent implements OnInit {
       productId:[null],
       name: [null, Validators.required],
       price: [null, Validators.required],
+      categoryParent:[null],
       description: [null]
     });
   }

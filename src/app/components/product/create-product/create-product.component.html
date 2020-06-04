@@ -10,6 +10,14 @@
             <mat-form-field class="invisible">
                 <input matInput formControlName="productId" />
             </mat-form-field>
+            <mat-form-field *ngIf="!product.productId" appearance="outline" class="full-width-input" color="primary">
+            <mat-label>Insert into:</mat-label>
+            <mat-select formControlName="categoryParent">
+              <mat-option *ngFor="let c of dataSource" [value]="c.categoryId">
+                {{ c.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
             <mat-form-field appearance="outline" class="full-width-input" color="primary">
           <mat-label>Name</mat-label>
           <input matInput formControlName="name" required />
@@ -32,9 +40,6 @@
           </mat-form-field>
        
         <section class="full-width-input give-me-some-space top margin-25">
-            <button type="submit" mat-raised-button click="cancel()">
-                Cancel
-              </button>
           <button type="submit" mat-raised-button color="primary"style="margin-left: 20px;" [disabled]="newProductFormGroup.invalid">
             Save
           </button>

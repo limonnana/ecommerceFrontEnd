@@ -21,7 +21,13 @@ export class ProductService {
 
   public save(product: Product) {
     console.log(JSON.stringify(product));
-    return this.http.post<Product>(`${environment.secureProductApi}/create`, product);
+    if(!product.productId)
+    {
+      return this.http.post<Product>(`${environment.secureProductApi}/create`, product);
+    }else
+    {
+      return this.http.post<Product>(`${environment.secureProductApi}/update`, product);
+    }
   }
 
   public getProductById(id: number){

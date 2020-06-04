@@ -1,0 +1,35 @@
+<mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <h2>Find User </h2>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+     
+    
+      <form novalidate [formGroup]="filterTableFormGroup">
+        <mat-form-field appearance="outline" class="full-width-input">
+          <mat-label>By Phone</mat-label>
+          <span matPrefix><mat-icon>search</mat-icon></span>
+          <input matInput formControlName="byPhone" placeholder="Search by phone" />
+        </mat-form-field>
+      </form>
+
+
+      <mat-table [dataSource]="usersDataSource">
+        <!-- define our table columns. you must have a column for every column defined in your columns string array -->
+        <!-- the matColumnDef value needs to be the value of a column you defined -->
+        <!-- the order of the columns is determined by the order specified in the columns() value -->
+  
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Name
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            {{ row.name }}
+          </mat-cell>
+        </ng-container>
+
+      </mat-table>
+      </mat-card-content>
+      </mat-card>

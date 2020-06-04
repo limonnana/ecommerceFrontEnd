@@ -11,6 +11,8 @@ import { ProductsComponent } from './components/product/products/products.compon
 import { CreateProductComponent } from './components/product/create-product/create-product.component';
 import { CategoriesComponent } from './components/category/categories/categories.component';
 import { CreateCategoryComponent } from './components/category/create-category/create-category.component';
+import { OrdersComponent } from './components/order/orders/orders.component';
+import { CreateOrderComponent } from './components/order/create-order/create-order.component';
 
 
 const routes: Routes = [
@@ -71,13 +73,23 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path:'create-product',
+    path:'createProduct',
     component: CreateProductComponent,
     canActivate: [AuthGuard]
   },
   {
     path:'editProduct',
     component: CreateProductComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path:'orders',
+    component: OrdersComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path:'createOrder',
+    component: CreateOrderComponent,
     canActivate: [AuthGuard]
   }
 ];

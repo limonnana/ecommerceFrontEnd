@@ -26,6 +26,8 @@ import { DescriptionModalComponent } from './components/product/description-moda
 import { GenericModalComponent } from './components/modal/generic-modal/generic-modal.component';
 import { CategoriesComponent } from './components/category/categories/categories.component';
 import { CreateCategoryComponent } from './components/category/create-category/create-category.component';
+import { OrdersComponent } from './components/order/orders/orders.component';
+import { CreateOrderComponent } from './components/order/create-order/create-order.component';
 
 
 
@@ -45,7 +47,9 @@ import { CreateCategoryComponent } from './components/category/create-category/c
     DescriptionModalComponent,
     GenericModalComponent,
     CategoriesComponent,
-    CreateCategoryComponent
+    CreateCategoryComponent,
+    OrdersComponent,
+    CreateOrderComponent
   ],
   imports: [
     BrowserModule,
