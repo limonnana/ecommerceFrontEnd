@@ -13,6 +13,7 @@ import { CategoriesComponent } from './components/category/categories/categories
 import { CreateCategoryComponent } from './components/category/create-category/create-category.component';
 import { OrdersComponent } from './components/order/orders/orders.component';
 import { CreateOrderComponent } from './components/order/create-order/create-order.component';
+import { CreateOrder1Component } from './components/order/create-order1/create-order1.component';
 
 
 const routes: Routes = [
@@ -90,6 +91,11 @@ const routes: Routes = [
   {
     path:'createOrder',
     component: CreateOrderComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path:'createOrder1',
+    component: CreateOrder1Component,
     canActivate: [AuthGuard]
   }
 ];

@@ -1,35 +1,84 @@
 <mat-card>
-    <mat-card-header>
-      <mat-card-title>
-        <h2>Find User </h2>
-      </mat-card-title>
-    </mat-card-header>
+    
     <mat-card-content>
      
-    
+      <button mat-button routerLink="/addUser">
+        <mat-icon>add</mat-icon>
+       Add User
+    </button>
+    <p>&nbsp;</p>
       <form novalidate [formGroup]="filterTableFormGroup">
         <mat-form-field appearance="outline" class="full-width-input">
           <mat-label>By Phone</mat-label>
           <span matPrefix><mat-icon>search</mat-icon></span>
           <input matInput formControlName="byPhone" placeholder="Search by phone" />
+        </mat-form-field> <mat-form-field appearance="outline" class="full-width-input" color="primary">
+          <mat-label>By Name</mat-label>
+          <span matPrefix><mat-icon>search</mat-icon></span>
+          <input matInput formControlName="byName" />
         </mat-form-field>
+
+      
       </form>
 
 
-      <mat-table [dataSource]="usersDataSource">
+      <mat-table [dataSource]="usersDataSource" matSort [trackBy]="trackByFn">
         <!-- define our table columns. you must have a column for every column defined in your columns string array -->
         <!-- the matColumnDef value needs to be the value of a column you defined -->
         <!-- the order of the columns is determined by the order specified in the columns() value -->
   
+        <ng-container matColumnDef="phone">
+          <mat-header-cell *matHeaderCellDef >
+            Phone
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            {{ row.phone }}
+          </mat-cell>
+        </ng-container>
+
         <ng-container matColumnDef="name">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>
+          <!-- define the header for the id column. add sorting -->
+          <mat-header-cell *matHeaderCellDef>
             Name
           </mat-header-cell>
+          <!-- define the cell that will contain the data for each record in the data source -->
+          <!-- row gives you access to the Account record for a given row in the data source -->
           <mat-cell *matCellDef="let row">
             {{ row.name }}
           </mat-cell>
         </ng-container>
 
+        <ng-container matColumnDef="email">
+          <mat-header-cell *matHeaderCellDef>
+            Email
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            {{ row.email }}
+          </mat-cell>
+        </ng-container>
+
+      
+        <ng-container matColumnDef="select">
+          <!-- define the header for the id column. add sorting -->
+          <mat-header-cell *matHeaderCellDef>
+            
+          </mat-header-cell>
+          <!-- define the cell that will contain the data for each record in the data source -->
+          <!-- row gives you access to the Account record for a given row in the data source -->
+          <mat-cell *matCellDef="let row"> &nbsp; &nbsp; &nbsp;
+              <button mat-icon-button (click)="onSelectClick(row.userId)">
+                  <mat-icon>arrow_right_alt</mat-icon>
+                  </button>
+          </mat-cell>
+        </ng-container>
+
+        <!-- define the header row for the given columns -->
+      <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+      <!-- define the rows and columns for each row in the data source -->
+      <mat-row *matRowDef="let row; columns: columns"></mat-row>
+    
       </mat-table>
+      <p>&nbsp;</p>
+      <mat-paginator #paginator [pageSize]="25" [pageSizeOptions]="[5, 10, 15, 25, 50, 100]" [showFirstLastButtons]="true"> </mat-paginator>
       </mat-card-content>
       </mat-card>

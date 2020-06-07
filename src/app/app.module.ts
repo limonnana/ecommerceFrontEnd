@@ -28,6 +28,7 @@ import { CategoriesComponent } from './components/category/categories/categories
 import { CreateCategoryComponent } from './components/category/create-category/create-category.component';
 import { OrdersComponent } from './components/order/orders/orders.component';
 import { CreateOrderComponent } from './components/order/create-order/create-order.component';
+import { CreateOrder1Component } from './components/order/create-order1/create-order1.component';
 
 
 
@@ -49,7 +50,8 @@ import { CreateOrderComponent } from './components/order/create-order/create-ord
     CategoriesComponent,
     CreateCategoryComponent,
     OrdersComponent,
-    CreateOrderComponent
+    CreateOrderComponent,
+    CreateOrder1Component
   ],
   imports: [
     BrowserModule,
