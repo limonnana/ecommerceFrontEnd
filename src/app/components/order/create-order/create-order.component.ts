@@ -35,7 +35,7 @@ export class CreateOrderComponent implements OnInit {
   (
     private fb: FormBuilder,
     private userService: UserService,
-    private router: Router,
+    private router: Router
   ) {}
 
   ngOnInit(): void {

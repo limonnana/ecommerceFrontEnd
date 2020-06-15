@@ -1,1 +1,66 @@
-<p>create-order1 works!</p>
+<p>Order for: {{user.name}}</p>
+
+<form novalidate [formGroup]="filterTableFormGroup">
+   
+    <mat-form-field appearance="outline" class="full-width-input" color="primary">
+      <mat-label>Search product</mat-label>
+      <span matPrefix><mat-icon>search</mat-icon></span>
+      <input matInput formControlName="byName" />
+    </mat-form-field>
+
+  
+  </form>
+
+  <mat-table [dataSource]="productsDataSource">
+
+    <ng-container matColumnDef="productId">
+      <!-- define the header for the id column. add sorting -->
+      <mat-header-cell *matHeaderCellDef>
+        Id
+      </mat-header-cell>
+      <!-- define the cell that will contain the data for each record in the data source -->
+      <!-- row gives you access to the Account record for a given row in the data source -->
+      <mat-cell *matCellDef="let row">
+        {{ row.productId }}
+      </mat-cell>
+    </ng-container>
+  
+      <ng-container matColumnDef="name">
+          <!-- define the header for the id column. add sorting -->
+          <mat-header-cell *matHeaderCellDef>
+            Name
+          </mat-header-cell>
+          <!-- define the cell that will contain the data for each record in the data source -->
+          <!-- row gives you access to the Account record for a given row in the data source -->
+          <mat-cell *matCellDef="let row">
+            {{ row.name }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+          <mat-header-cell *matHeaderCellDef>
+            Price
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            {{ row.price }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+          <mat-header-cell *matHeaderCellDef >
+            Description 
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row" (click)="openDialogDescription(row.description)">
+              <button mat-icon-button color="accent">
+                   <mat-icon>info</mat-icon>
+                </button>
+             
+          </mat-cell>
+        </ng-container>
+
+
+   <!-- define the header row for the given columns -->
+    <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+    <!-- define the rows and columns for each row in the data source -->
+    <mat-row *matRowDef="let row; columns: columns"></mat-row>
+  </mat-table>
