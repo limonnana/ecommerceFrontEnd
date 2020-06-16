@@ -17,11 +17,13 @@ import { DescriptionModalComponent } from '../../product/description-modal/descr
   styleUrls: ['./create-order1.component.scss']
 })
 export class CreateOrder1Component implements OnInit {
-
+  
+  public quantity : number[] = [];
   user: User = new User();
   private productsDataSource: MatTableDataSource<Product> = new MatTableDataSource<Product>();
   private _unsubscribe = new Subject<void>();
   filterTableFormGroup: FormGroup = null;
+  //formQuantity: FormGroup = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,6 +35,8 @@ export class CreateOrder1Component implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.quantity[3] = 0;
+    this.quantity[6] = 0;
     let userId = this.route.snapshot.params['userId'];
     console.log('User id is: ' + userId);
 
@@ -45,6 +49,7 @@ export class CreateOrder1Component implements OnInit {
     });
 
   this.filterTableFormGroup = this.buildForm();
+  //this.formQuantity = this.buildFormQuantity();
     this.getProducts(); 
 
     // subscribe to changes that occur on the filterTableFormGroup.filter form control
@@ -68,7 +73,7 @@ export class CreateOrder1Component implements OnInit {
 get columns(): string[] {
   // return a string array of the columns in the table
   // the order of these values will be the order your columns show up in
-  return ['productId' , 'name', 'price', 'description'];
+  return [ 'name', 'price', 'description','quantityCol', 'select'];
 }
 
 buildForm(): FormGroup {
@@ -77,10 +82,21 @@ buildForm(): FormGroup {
   });
 }
 
+//buildFormQuantity(): FormGroup {
+//  return this.fb.group({
+//   quantity:['0']
+ // });
+//}
+
 getProducts(){
   this.productService.getProducts().subscribe(data => {
     this.productsDataSource.data = data;
   });
+}
+
+onSelectClick(id, quantity){
+  console.log('select id: ' + id + 'quantity: '+ quantity);
+ // this.quantity[id] = Number(this.quantity[id]) + Number(quantity);
 }
 
 ngAfterViewInit() {
