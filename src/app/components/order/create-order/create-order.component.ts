@@ -2,13 +2,7 @@ import { User } from 'src/app/models/user';
 import {
   Component,
   OnInit,
-  ChangeDetectionStrategy,
-  Input,
-  AfterViewInit,
-  OnDestroy,
-  ViewChild,
-  Output,
-  EventEmitter
+  ViewChild
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';

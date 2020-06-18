@@ -52,25 +52,37 @@
           <mat-header-cell *matHeaderCellDef>
             Quantity
           </mat-header-cell>
-          <mat-cell *matCellDef="let row">
+          <mat-cell *matCellDef="let row" >
         <mat-form-field appearance="outline" class="full-width-input" color="primary">
-          <input matInput [(ngModel)]="quantity[row.productId]"/>
+          <input matInput [(ngModel)]="quantity[row.productId]" (blur)="setQuantity(row.productId, quantity[row.productId])"/>
         </mat-form-field>
         </mat-cell>
         </ng-container>
     
-        <ng-container matColumnDef="select">
+        <ng-container matColumnDef="add">
           <!-- define the header for the id column. add sorting -->
           <mat-header-cell *matHeaderCellDef>
       </mat-header-cell>
       <!-- define the cell that will contain the data for each record in the data source -->
       <!-- row gives you access to the Account record for a given row in the data source -->
       <mat-cell *matCellDef="let row"> &nbsp; &nbsp; &nbsp;
-          <button mat-icon-button (click)="onSelectClick(row.productId, quantity[row.productId])">
+          <button mat-icon-button (click)="onAddClick(row.productId, quantity[row.productId])">
               <mat-icon>add</mat-icon>
               </button>
       </mat-cell>
      </ng-container>
+
+     <ng-container matColumnDef="substract">
+      <!-- define the header for the id column. add sorting -->
+      <mat-header-cell *matHeaderCellDef>
+    </mat-header-cell>
+  
+     <mat-cell *matCellDef="let row"> &nbsp; &nbsp; &nbsp;
+      <button mat-icon-button (click)="onSubstractClick(row.productId, quantity[row.productId])">
+          <mat-icon>horizontal_rule</mat-icon>
+          </button>
+  </mat-cell>
+ </ng-container>
 
    <!-- define the header row for the given columns -->
     <mat-header-row *matHeaderRowDef="columns"></mat-header-row>

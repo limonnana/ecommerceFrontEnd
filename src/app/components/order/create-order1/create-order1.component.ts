@@ -22,7 +22,9 @@ export class CreateOrder1Component implements OnInit {
   user: User = new User();
   private productsDataSource: MatTableDataSource<Product> = new MatTableDataSource<Product>();
   private _unsubscribe = new Subject<void>();
+  private initialValue : number[] = [];
   filterTableFormGroup: FormGroup = null;
+  private productsQuantities = new Map();
   //formQuantity: FormGroup = null;
 
   constructor(
@@ -35,8 +37,6 @@ export class CreateOrder1Component implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.quantity[3] = 0;
-    this.quantity[6] = 0;
     let userId = this.route.snapshot.params['userId'];
     console.log('User id is: ' + userId);
 
@@ -73,7 +73,7 @@ export class CreateOrder1Component implements OnInit {
 get columns(): string[] {
   // return a string array of the columns in the table
   // the order of these values will be the order your columns show up in
-  return [ 'name', 'price', 'description','quantityCol', 'select'];
+  return [ 'name', 'price', 'description','quantityCol', 'add', 'substract'];
 }
 
 buildForm(): FormGroup {
@@ -91,13 +91,57 @@ buildForm(): FormGroup {
 getProducts(){
   this.productService.getProducts().subscribe(data => {
     this.productsDataSource.data = data;
+    this.productsDataSource.data.forEach(x =>  {this.quantity[x.productId] = 0});
   });
 }
 
-onSelectClick(id, quantity){
-  console.log('select id: ' + id + 'quantity: '+ quantity);
- // this.quantity[id] = Number(this.quantity[id]) + Number(quantity);
+setQuantity(id, quantity){
+  this.quantity[id] = Number(quantity);
+  this.initialValue[id] = Number(quantity);
+  this.productsQuantities.set(id,this.quantity[id]);
+  console.log('blur id: ' + id + ' blur quantity: '+ this.quantity[id]);
+  console.log('map: ' + this.productsQuantities.get(id));
 }
+
+onAddClick(id, quantity){
+ 
+ if(!this.initialValue[id]){
+   this.initialValue[id] = 0;
+ }
+ this.quantity[id] = this.initialValue[id] + 1;
+ this.initialValue[id] = this.quantity[id];
+ this.productsQuantities.set(id,this.quantity[id]);
+ console.log('select id: ' + id + ' quantity: '+ this.quantity[id]);
+ console.log('map: ' + this.productsQuantities.get(id));
+ this.storeLocalMap();
+ this.writeMap();
+}
+
+onSubstractClick(id, quantity){
+ 
+  if(!this.initialValue[id]){
+    this.initialValue[id] = 0;
+  }
+  if(this.quantity[id] > 0){
+  this.quantity[id] = this.initialValue[id] - 1;
+  this.initialValue[id] = this.quantity[id];
+  this.productsQuantities.set(id,this.quantity[id]);
+  }
+  console.log('select id: ' + id + ' quantity: '+ this.quantity[id]);
+  console.log('map: ' + this.productsQuantities.get(id));
+ }
+
+ storeLocalMap(){
+   localStorage.setItem('order',JSON.stringify(this.productsQuantities));
+ }
+ writeMap(){
+   let mapObject = localStorage.getItem('order');
+   let mapaString = JSON.parse(mapObject);
+   //let myMap = new Map(mapaString);
+  // var obj = JSON.parse(filter);
+  let key = '6';
+   console.log('MYMAP: ' + mapaString.key);
+ }
 
 ngAfterViewInit() {
   this.getProducts();
