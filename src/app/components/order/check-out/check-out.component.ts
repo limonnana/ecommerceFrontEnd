@@ -21,6 +21,7 @@ export class CheckOutComponent implements OnInit {
   orderProductQuantityTotalList: OrderProductQuantityTotal[] = null;
   private orderSource : MatTableDataSource<OrderProductQuantityTotal>;
   private orderDtoResponse: OrderDtoResponse = new OrderDtoResponse();
+  dataSource = new MatTableDataSource<any>();
   private totalTotal: string;
 
   constructor(
@@ -38,6 +39,7 @@ export class CheckOutComponent implements OnInit {
     this.name = data.user.name;
     this.totalTotal = data.totalTotal;
     this.orderProductQuantityTotalList = data.orderProductQuantityTotal;
+   // this.dataSource = this.orderProductQuantityTotalList;
     this.orderSource = new MatTableDataSource(this.orderProductQuantityTotalList);            
     });
   }
@@ -45,7 +47,7 @@ export class CheckOutComponent implements OnInit {
 
   get columns(): string[] {
     
-    return ['name', 'price' ,'quantity', 'total'];
+    return ['productId' , 'name', 'price' ,'quantity',  'add', 'substract', 'total'];
   }
 
   writeMapInDTO(){
@@ -68,5 +70,21 @@ export class CheckOutComponent implements OnInit {
       }
    }
 }
+
+  onAddClick(row){
+  const productIndex = this.orderSource.data.findIndex(orderProductQuantityTotal => orderProductQuantityTotal.productId === row.productId);
+  console.log('data: ' + productIndex);
+  let orderProductQuantityTotalTemp = this.orderSource.data[productIndex];
+  orderProductQuantityTotalTemp.quantity =  orderProductQuantityTotalTemp.quantity + 1;
+   this.orderSource._updateChangeSubscription();
+  }
+
+  onSubstractClick(row){
+    const productIndex = this.orderSource.data.findIndex(orderProductQuantityTotal => orderProductQuantityTotal.productId === row.productId);
+    console.log('data: ' + productIndex);
+    let orderProductQuantityTotalTemp = this.orderSource.data[productIndex];
+    orderProductQuantityTotalTemp.quantity =  orderProductQuantityTotalTemp.quantity - 1;
+     this.orderSource._updateChangeSubscription();
+  }
 
 }

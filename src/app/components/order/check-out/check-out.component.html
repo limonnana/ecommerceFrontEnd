@@ -9,7 +9,17 @@
 
 <mat-table [dataSource]="orderSource">
 
-    
+    <ng-container matColumnDef="productId">
+        <!-- define the header for the id column. add sorting -->
+        <mat-header-cell *matHeaderCellDef>
+          Id
+        </mat-header-cell>
+        <!-- define the cell that will contain the data for each record in the data source -->
+        <!-- row gives you access to the Account record for a given row in the data source -->
+        <mat-cell *matCellDef="let row">
+          {{ row.productId }}
+        </mat-cell>
+      </ng-container>
       <ng-container matColumnDef="name">
           <!-- define the header for the id column. add sorting -->
           <mat-header-cell *matHeaderCellDef>
@@ -56,7 +66,7 @@
       </mat-header-cell>
     
        <mat-cell *matCellDef="let row"> &nbsp; &nbsp; &nbsp;
-        <button mat-icon-button (click)="onSubstractClick(row.productId)">
+        <button mat-icon-button (click)="onSubstractClick(row)">
             <mat-icon>horizontal_rule</mat-icon>
             </button>
     </mat-cell>
@@ -64,10 +74,10 @@
 
         <ng-container matColumnDef="total">
           <mat-header-cell *matHeaderCellDef >
-            Total 
+            &nbsp; Total 
           </mat-header-cell>
           <mat-cell *matCellDef="let row">
-              {{row.total}}
+              &nbsp; {{row.total}}
           </mat-cell>
         </ng-container>
 
