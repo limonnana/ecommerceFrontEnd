@@ -9,7 +9,7 @@ import { Subject } from 'rxjs';
 import { ProductService } from 'src/app/services/product.service';import { distinctUntilChanged, debounceTime, takeUntil } from 'rxjs/operators';
 import { isNullOrUndefined } from 'util';
 import { DescriptionModalComponent } from '../../product/description-modal/description-modal.component';
-
+import { TSMap } from "typescript-map"
 
 @Component({
   selector: 'app-create-order1',
@@ -24,8 +24,10 @@ export class CreateOrder1Component implements OnInit {
   private _unsubscribe = new Subject<void>();
   private initialValue : number[] = [];
   filterTableFormGroup: FormGroup = null;
-  private productsQuantities = new Map();
-  //formQuantity: FormGroup = null;
+  private productsQuantities = new TSMap<string,number>();
+  private userId = null;
+  
+
 
   constructor(
     private route: ActivatedRoute,
@@ -37,15 +39,15 @@ export class CreateOrder1Component implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    let userId = this.route.snapshot.params['userId'];
-    console.log('User id is: ' + userId);
+    this.userId = this.route.snapshot.params['userId'];
+    console.log('User id is: ' + this.userId);
 
-    this.userService.getUserById(userId)
+    this.userService.getUserById(this.userId)
       .subscribe( data => {
         this.user.name = data.name;
         this.user.phone = data.phone;
         this.user.email = data.email;
-        this.user.userId = userId;
+        this.user.userId = this.userId;
     });
 
   this.filterTableFormGroup = this.buildForm();
@@ -82,11 +84,6 @@ buildForm(): FormGroup {
   });
 }
 
-//buildFormQuantity(): FormGroup {
-//  return this.fb.group({
-//   quantity:['0']
- // });
-//}
 
 getProducts(){
   this.productService.getProducts().subscribe(data => {
@@ -95,6 +92,7 @@ getProducts(){
   });
 }
 
+
 setQuantity(id, quantity){
   this.quantity[id] = Number(quantity);
   this.initialValue[id] = Number(quantity);
@@ -102,6 +100,7 @@ setQuantity(id, quantity){
   console.log('blur id: ' + id + ' blur quantity: '+ this.quantity[id]);
   console.log('map: ' + this.productsQuantities.get(id));
 }
+
 
 onAddClick(id, quantity){
  
@@ -132,15 +131,12 @@ onSubstractClick(id, quantity){
  }
 
  storeLocalMap(){
-   localStorage.setItem('order',JSON.stringify(this.productsQuantities));
+   var theJson = this.productsQuantities.toJSON();
+   localStorage.setItem('order_' + this.userId,JSON.stringify(theJson));
  }
  writeMap(){
-   let mapObject = localStorage.getItem('order');
-   let mapaString = JSON.parse(mapObject);
-   //let myMap = new Map(mapaString);
-  // var obj = JSON.parse(filter);
-  let key = '6';
-   console.log('MYMAP: ' + mapaString.key);
+   let mapString = localStorage.getItem('order_' + this.userId);
+   console.log('MYMAP: ' + mapString);
  }
 
 ngAfterViewInit() {
@@ -169,7 +165,9 @@ openDialogDescription(description): void {
 
 }
 
-
+checkOut(){
+  this.router.navigate(['checkOut',{userId:this.userId}]);
+}
 
 
 }

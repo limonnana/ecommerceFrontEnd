@@ -29,6 +29,12 @@ export class UserComponent implements OnInit {
     this.userService.getUsers().subscribe(data => {
       this.dataSource.data = data;
     });
+    this.writeMap();
+  }
+
+  writeMap(){
+    let mapString = localStorage.getItem('order_' + 5);
+    console.log('MYMAP: ' + mapString);
   }
 
 

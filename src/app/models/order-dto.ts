@@ -1,5 +1,7 @@
+import { TSMap } from 'typescript-map';
+
 export class OrderDTO {
 
     userId: number;
-    productsQuantities: Map<number, number>;
+    productsQuantities = new TSMap<string,number>();
 }

@@ -7,6 +7,7 @@ export const environment = {
   secureUserApi: 'http://localhost:8080/secure/user',
   secureProductApi: 'http://localhost:8080/secure/product',
   secureCategoryApi: 'http://localhost:8080/secure/category',
+  secureOrderApi: 'http://localhost:8080/secure/order',
   domain: 'http://localhost:8080'
 
 };

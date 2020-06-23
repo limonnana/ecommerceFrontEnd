@@ -14,6 +14,7 @@ import { CreateCategoryComponent } from './components/category/create-category/c
 import { OrdersComponent } from './components/order/orders/orders.component';
 import { CreateOrderComponent } from './components/order/create-order/create-order.component';
 import { CreateOrder1Component } from './components/order/create-order1/create-order1.component';
+import { CheckOutComponent } from './components/order/check-out/check-out.component';
 
 
 const routes: Routes = [
@@ -96,6 +97,11 @@ const routes: Routes = [
   {
     path:'createOrder1',
     component: CreateOrder1Component,
+    canActivate: [AuthGuard]
+  },
+  {
+    path:'checkOut',
+    component: CheckOutComponent,
     canActivate: [AuthGuard]
   }
 ];
