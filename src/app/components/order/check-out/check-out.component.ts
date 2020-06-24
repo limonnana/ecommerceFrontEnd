@@ -76,7 +76,7 @@ export class CheckOutComponent implements OnInit {
   console.log('data: ' + productIndex);
   let orderProductQuantityTotalTemp = this.orderSource.data[productIndex];
   orderProductQuantityTotalTemp.quantity =  orderProductQuantityTotalTemp.quantity + 1;
-   this.orderSource._updateChangeSubscription();
+  this.orderSource._updateChangeSubscription();
   }
 
   onSubstractClick(row){
@@ -87,4 +87,5 @@ export class CheckOutComponent implements OnInit {
      this.orderSource._updateChangeSubscription();
   }
 
+ 
 }
