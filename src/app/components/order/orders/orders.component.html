@@ -1,1 +1,56 @@
-<p>orders works!</p>
+<mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <h1>Orders</h1>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+
+        
+
+    <mat-table [dataSource]="dataSource">
+
+      <ng-container matColumnDef="orderId">
+        <!-- define the header for the id column. add sorting -->
+        <mat-header-cell *matHeaderCellDef>
+          Id
+        </mat-header-cell>
+        <!-- define the cell that will contain the data for each record in the data source -->
+        <!-- row gives you access to the Account record for a given row in the data source -->
+        <mat-cell *matCellDef="let row">
+          {{ row.orderId }}
+        </mat-cell>
+      </ng-container>
+    
+        <ng-container matColumnDef="created">
+            <!-- define the header for the id column. add sorting -->
+            <mat-header-cell *matHeaderCellDef>
+              Created
+            </mat-header-cell>
+            <!-- define the cell that will contain the data for each record in the data source -->
+            <!-- row gives you access to the Account record for a given row in the data source -->
+            <mat-cell *matCellDef="let row">
+              {{ row.created }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="totalTotal">
+            <mat-header-cell *matHeaderCellDef>
+              Total
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              {{ row.totalTotal }}
+            </mat-cell>
+          </ng-container>
+
+         
+
+     <!-- define the header row for the given columns -->
+      <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+      <!-- define the rows and columns for each row in the data source -->
+      <mat-row *matRowDef="let row; columns: columns"></mat-row>
+    </mat-table>
+      </mat-card-content>
+    </mat-card>
+
+
