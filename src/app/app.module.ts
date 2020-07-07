@@ -30,6 +30,7 @@ import { OrdersComponent } from './components/order/orders/orders.component';
 import { CreateOrderComponent } from './components/order/create-order/create-order.component';
 import { CreateOrder1Component } from './components/order/create-order1/create-order1.component';
 import { CheckOutComponent } from './components/order/check-out/check-out.component';
+import { OrderComponent } from './components/order/order/order.component';
 
 
 
@@ -53,7 +54,8 @@ import { CheckOutComponent } from './components/order/check-out/check-out.compon
     OrdersComponent,
     CreateOrderComponent,
     CreateOrder1Component,
-    CheckOutComponent
+    CheckOutComponent,
+    OrderComponent
   ],
   imports: [
     BrowserModule,

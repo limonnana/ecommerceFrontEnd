@@ -27,4 +27,10 @@ export class OrderService {
   public finishOrder(orderDtoResponse: OrderDtoResponse) : Observable<OrderDtoResponse>{
     return this.http.post<OrderDtoResponse>(`${environment.secureOrderApi}/finishOrder`, orderDtoResponse);
   }
+  
+  public getOrderById(id: number){
+    return this.http.get<Order>(`${environment.secureOrderApi}/getOrder/` + id);
+  }
+
+
 }
